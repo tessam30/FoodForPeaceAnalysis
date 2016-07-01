@@ -40,6 +40,95 @@ foreach x of local comtype {
 	}
 *end
 
+g category = "";
+replace category = "Bean" if inlist(material, "BEANS, PINTO BAG-50 KG",  /*
+			*/ "BEANS, BLACK BAG-50 KG", "BEANS, KIDNEY, DARK RED BAG-50 KG",  /*
+			*/ "BEANS, GARBANZO, KABULI BAG-50 KG", /*
+			*/ "BEANS, SMALL RED BAG-50 KG",  /*
+			*/ "BEANS, GREAT NORTHERN BAG-50 KG")
+
+replace category = "Bulgur" if inlist(material, "BULGUR, SOY-FORT BAG-50 KG", /*
+			*/ "BULGUR  BAG-50 KG")
+			
+replace category = "Corn" if inlist(material, "CORN-SOY BLEND PLUS BAG-HP-25 KG",/*
+			*/ "CORNMEAL BAG-HP-25 KG",/*
+			*/ "CORN-SOY BLEND BAG-HP-25 KG",/*
+			*/ "CORN-SOY BLEND BAG-25 KG",/*
+			*/ "CORNMEAL, SOY-FORT BAG-HP-25 KG",/*
+			*/ "CORN, YELLOW BAG-50 KG",/*
+			*/ "CORN, YELLOW BULK")
+
+replace category = "Ready To Use Foods" if inlist(material, "EMERGNCY FD, RUTF SPRD POUCH-150/92 G",/*
+			*/ "EMERGNCY FD, RUSF POUCH-150/100 G",/*
+			*/ "EMERGNCY FD, A20 PASTE POUCH-18-9/50 G",/*
+			*/ "EMERGNCY FD, A28 RICE BAR-24-9/55 G",/*
+			*/ "EMERGNCY FD, A29 WHEAT BAR-24-9/55 G",/*
+			*/ "EMERGENCY FD, RUSF POUCH-135/100 G")
+			
+replace category = "Flour" if inlist(material, "FLOUR, ALL PURPOSE BAG-50 KG",/*
+			*/ "FLOUR, BREAD BAG-50 KG")
+
+replace category = "Lentils" if inlist(material, "LENTILS BAG-50 KG")
+
+replace category = "Oil" if inlist(material, "OIL, VEGETABLE CAN-6/4 L",/*
+			*/ "OIL, VEGETABLE BOTTLE, PLS-6/4 L 670-719",/*
+			*/ "OIL, VEGETABLE PAIL-20 L",/*
+			*/ "OIL, VEGETABLE BOTTLE, PLS-6/4 L 800-899",/*
+			*/ "OIL, SOYBEAN, CRUDE, DEGUMMED BULK")
+		
+replace category = "Oil" if inlist(material, "OIL, VEGETABLE BOTTLE, PLS-6/4 L 720-799",/*
+			*/ "OIL, VEGETABLE DRUM-208 L",/*
+			*/ "OIL, SUNFLOWERSEED PAIL-20 L",/*
+			*/ "OIL, SUNFLWRSD BOTTLE, PLS-6/4 L 720-799",/*
+			*/ "OIL, SUNFLOWERSEED CAN-6/4 L",/*
+			*/ "OIL, SUNFLWRSD BOTTLE, PLS-6/4 L 670-719")
+
+replace category = "Peas" if inlist(material, "PEAS, YELLOW, SPLIT BAG-50 KG",/*
+			*/ "PEAS, YELLOW, WHOLE BAG-50 KG",/*
+			*/ "PEAS, GREEN, SPLIT BAG-50 KG",/*
+			*/ "PEAS, GREEN, WHOLE BAG-50 KG",/*
+			*/ "PEAS, YELLOW, WHOLE PKG-6/4 LB")
+			
+replace category = "Rice" if inlist(material, "RICE, 5/20 LG, W-MLD BAG-50 KG",/*
+			*/"RICE, 2/7 LG, W-MLD BAG-50 KG",/*
+			*/"RICE, 2/7 LG, W-MLD, PRBL BAG-50 KG",/*
+			*/"RICE, MILLED BULK",/*
+			*/"RICE, 5/20 MG, W-MLD BAG-50 KG",/*
+			*/"RICE, 2/4 LG, H-MLD BAG-25 KG")
+			
+replace category = "Rice" if inlist(material, "RICE, 5/20 LG, W-MLD, PRBL BAG-50 KG",/*
+			*/"RICE, 3/15 LG, W-MLD BAG-50 KG",/*
+			*/"RICE, 5/20 LG, W-MLD, FORT BAG-50 KG",/*
+			*/"RICE, 2/7 LG, W-MLD PKG-6/4 LB",/*
+			*/"RICE, 3/15 MG, W-MLD BAG-50 KG")
+			
+replace category = "Wheat" if inlist(material, "WHEAT, HARD RED WINTER BULK",/*
+			*/"WHEAT, SOFT WHITE BULK",/*
+			*/"WHEAT-SOY BLEND BAG-25 KG",/*
+			*/"WHEAT-SOY BLEND BAG-HP-25 KG",/*
+			*/"WHEAT, HARD RED WINTER BAG-50 KG")
+replace category = "Wheat" if inlist(material, "WHEAT, NORTHERN SPRING BULK",/*
+			*/"WHEAT, HARD RED SPRING BULK",/*
+			*/"WHEAT, SOFT WHITE BAG-50 KG",/*
+			*/"WHEAT, DARK NORTHERN SPRING BULK",/*
+			*/"WHEAT, HARD RED SPRING BAG-50 KG")
+			
+replace category = "Sorghum" if inlist(material, "SORGHUM BULK", "SORGHUM BAG-50 KG")
+replace category = "Fortified Blended Foods" if inlist(material, "CSB SUPER CEREAL PLUS BOX-10/1.5 KG")
+
+drop if regexm(material, "(POTATO FLAKES|POTATO GRANULES|SALMON|SOY FLOUR, DEFATTED|SOY PROTIEN, ISOLATE)")
+
+* Create a second level category variable
+g sec_category = "other"
+replace sec_category = "Fortified Blended Foods" if inlist(material, "CORN-SOY BLEND PLUS BAG-HP-25 KG",/*
+			*/ "CORNMEAL BAG-HP-25 KG",/*
+			*/ "CORN-SOY BLEND BAG-HP-25 KG",/*
+			*/ "CORN-SOY BLEND BAG-25 KG",/*
+			*/ "CORNMEAL, SOY-FORT BAG-HP-25 KG",/*
+			*/ "CSB SUPER CEREAL PLUS BOX-10/1.5 KG")
+
+replace sec_category = "Ready to Use Foods" if category == "Ready To Use Foods"
+
 /* Create a dataset of crosswalk data here --  used for consultation
 preserve
 g byte freq = 1
@@ -62,16 +151,85 @@ gen wgttype = regexs(0) if(regexm(wgt, "[A-Z]*$"))
 la var wgt "commodity weight"
 la var wgttype "commodity weight type"
 
+* Potential unit cost?
+g po_unitcost = povalue / metrictons
+
+* TO DO:Create a few common groupings for the commodities
+
+* Create a few date variables
+g monthpo = month(podate)
+g yearpo = year(podate)
+g moYear = mdy(monthpo, 15, yearpo )
+format moYear %td
+
+*
+* For now, we are filtering on only Title II programming
+keep if program == "480-TITLE_II"
+
+* Focus on yellow split peas for the time being
+egen totMatPOV = total(povalue), by(material recipientcountry)
+egen totCatPOV = total(povalue), by(category recipientcountry)
+
+local poStat mean min max
+foreach x of local poStat {
+	egen daily_`x' = `x'(po_unitcost), by(material podate recipientcountry)
+	egen daily_`x'_com = `x'(po_unitcost), by(material podate)
+	egen monthly_`x'_com = `x'(po_unitcost), by(material monthpo)
+	
+	egen daily_`x'_categ = `x'(po_unitcost), by(categ podate recipientcountry)
+	egen daily_`x'_com_categy = `x'(po_unitcost), by(material podate)
+	egen monthly_`x'_com_categy = `x'(po_unitcost), by(material monthpo)
+	
+}
+*end
+
+* Sort on tht total povalue for the country
+g tmpvar = -totMatPOV
+g tmpvar2 = -totCatPOV
+egen materialOrd = axis(tmpvar recipientcountry), label(recipientcountry)
+egen categoryOrd = axis(tmpvar2 recipientcountry), label(recipientcountry)
+
+
+* Create a variable to track who commodities are being sold to, grouping those obs w/ 
+* fewer than 10 entires
+clonevar buyer = soldtoparty
+bys buyer: gen freqtmp = _N
+replace buyer = "OTHER" if freqtmp < 10
+bys podate: g datecount =_N
+
+* create frequencies of purchases
+egen mat_count = count(povalue), by(podate material)
+egen cat_count = count(povalue), by(podate category)
 
 tabsort material if forprep ==1
 
-* Basic bar graph of material counts collected at foreign prep
-graph hbar (sum) forprep if forprep == 1, over(material, sort((sum ) forprep) /*
-*/ descending label(labcolor(gs6) labsize(tiny)) axis(lcolor(none))) /*
-*/ bar(1, fcolor(gs10) lcolor(gs14)) blabel(bar, color(gs6) position(outside))/*
-*/ yscale(noline) ylabel(, nolabels noticks nogrid) legend(off) scheme(s1mono)/*
-*/ graphregion(fcolor(none) lcolor(none) ifcolor(none)) plotregion(fcolor(none)/*
-*/ lcolor(none) ifcolor(none) ilcolor(none))
+* Add a regional variable to the mix to capture geography in the model
+
+g region = ""
+replace region = "East Africa" if regexm(recipientcountry, /*
+ */"(BURUNDI|RWANDA|TANZANIA|UGANDA|DJIBOUTI|ETHIOPIA|KENYA|SOMALIA|SUDAN)")
+
+replace region = "Southern Africa" if regexm(recipientcountry, /*
+*/"(ZIMBABWE|MADAGASCAR|MALAWI|AFRICAN REP.|CONGO-DEM|MOZAMBIQUE)")
+
+replace region = "west Africa" if regexm(recipientcountry, /*
+*/"(NIGER|BURKINA|MALI|GHANA|CHAD|SIERRA|MAURITANIA|IVORY|CAMEROON|SENEGAL|LIBERIA)")
+
+replace region = "Middle East and North Africa" if regexm(recipientcountry, /*
+*/"(YEMEN|ALGERIA|WEST BANK|SYRIA)")
+
+replace region = "Prep" if regexm(recipientcountry, /*
+*/"(DOMESTIC|FOREIGN)")
+
+replace region = "Latin America & Caribbean" if regexm(recipientcountry, /*
+*/"(HAITI|GUATEMALA|COLOMBIA|ECUADOR)")
+
+replace region = "Asia" if regexm(recipientcountry, /*
+*/"(BANGLADESH|PAKISTAN|AFGHAN|NEPAL|SRI LANKA)")
 
 
-tabsort soldtoparty, sum(povalue)
+bys fiscalyear: tabsort category region, mi
+compress
+
+save "$pathout/ffp_procurement.dta", replace
+
