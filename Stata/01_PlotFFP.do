@@ -36,8 +36,14 @@ format povalue %16.0fc
 * General plot of peas, corn and oil
  twoway(rcapsym daily_min_categ daily_max_categ podate, mc("190 190 190") lc("190 190 190"))/*
 */ (scatter daily_mean_categ podate, m(O) mc("65 171 93")) /*
-*/ if inlist(category, "Peas", "Corn", "Oil"),/*
+*/ if inlist(category, "Peas"),/*
 */ by(categoryOrd, row(3)) ylabel(,angle(horizontal)) xlabel(18712(60)20332, labsize(tiny) angle(vertical) /*
+*/ format(%tdMon_CCYY) ticks grid)
+
+ twoway(rcapsym daily_min_categ daily_max_categ podate, mc("190 190 190") lc("190 190 190"))/*
+*/ (scatter daily_mean_categ podate, m(O) mc("65 171 93")) /*
+*/ if inlist(category, "Peas", "Corn", "Oil"),/*
+*/ by(category, row(3)) ylabel(,angle(horizontal)) xlabel(18712(60)20332, labsize(tiny) angle(vertical) /*
 */ format(%tdMon_CCYY) ticks grid)
 
 

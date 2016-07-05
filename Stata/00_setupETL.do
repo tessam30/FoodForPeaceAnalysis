@@ -33,6 +33,23 @@ tab recipientcountry if regexm(recipientcountry , "(AFR|DEM|CONGO)") == 1
 g byte forprep = recipientcountry =="FOREIGN-PREP"
 la var forprep "foreign prep records only"
 
+* Merge in consumer price index information to check whether or not inflation matters
+/* gen statadate = var5 + td(30dec1899)
+format statadate  %td
+*/
+* Create a few date variables
+g monthpo = month(podate)
+g yearpo = year(podate)
+g moYear = mdy(monthpo, 15, yearpo )
+format moYear %td
+
+merge m:1 moYear using "$pathout/inflation.dta"
+drop if _merge == 2
+
+* Create inflation adjusted povalue
+g double povalue_2011 = round((povalue/cpi_updated)*100, 100)
+
+
 * Create a grouping for the commodities
 local comtype BEANS CORN EMERG FLOUR LENTILS OIL PEAS POTATO RICE SORGHUM WHEAT
 foreach x of local comtype {
@@ -156,11 +173,6 @@ g po_unitcost = povalue / metrictons
 
 * TO DO:Create a few common groupings for the commodities
 
-* Create a few date variables
-g monthpo = month(podate)
-g yearpo = year(podate)
-g moYear = mdy(monthpo, 15, yearpo )
-format moYear %td
 
 *
 * For now, we are filtering on only Title II programming
@@ -168,17 +180,30 @@ keep if program == "480-TITLE_II"
 
 * Focus on yellow split peas for the time being
 egen totMatPOV = total(povalue), by(material recipientcountry)
+la var totMatPOV "total povalue by material and country"
+
 egen totCatPOV = total(povalue), by(category recipientcountry)
+la var totCatPOV "total povalue by category and country"
 
 local poStat mean min max
 foreach x of local poStat {
 	egen daily_`x' = `x'(po_unitcost), by(material podate recipientcountry)
-	egen daily_`x'_com = `x'(po_unitcost), by(material podate)
-	egen monthly_`x'_com = `x'(po_unitcost), by(material monthpo)
+	la var daily_`x' "`x' unit cost by material date and recipient country"
 	
-	egen daily_`x'_categ = `x'(po_unitcost), by(categ podate recipientcountry)
-	egen daily_`x'_com_categy = `x'(po_unitcost), by(material podate)
-	egen monthly_`x'_com_categy = `x'(po_unitcost), by(material monthpo)
+	egen daily_`x'_com = `x'(po_unitcost), by(material podate)
+	la var daily_`x'_com "`x' unit cost by material and date"
+	
+	egen monthly_`x'_com = `x'(po_unitcost), by(material moYear)
+	la var monthly_`x'_com "`x' unit cost by material and month and year"
+	
+	egen daily_`x'_country = `x'(po_unitcost), by(categ podate recipientcountry)
+	la var daily_`x'_country "`x' unit cost by cateogry, date and recipient country"
+	
+	egen daily_`x'_category = `x'(po_unitcost), by(categ podate)
+	la var daily_`x'_category  "`x' unit cost by category and date"
+	
+	egen monthly_`x'_category = `x'(po_unitcost), by(categ moYear)
+	la var monthly_`x'_category "`x' unit cost by category and month and year"
 	
 }
 *end
@@ -202,6 +227,11 @@ egen mat_count = count(povalue), by(podate material)
 egen cat_count = count(povalue), by(podate category)
 
 tabsort material if forprep ==1
+
+* Sorting variables
+egen totCatValue = total(povalue/1000000), by(category)
+egen totMatValue = total(povalue/1000000), by(material)
+
 
 * Add a regional variable to the mix to capture geography in the model
 
@@ -228,8 +258,22 @@ replace region = "Asia" if regexm(recipientcountry, /*
 */"(BANGLADESH|PAKISTAN|AFGHAN|NEPAL|SRI LANKA)")
 
 
+
 bys fiscalyear: tabsort category region, mi
 compress
 
-save "$pathout/ffp_procurement.dta", replace
+* Create some labels to identify new variables
+la var category "simplified categories"
+la var sec_category "secondary simplified categories"
+la var po_unitcost "unit cost of commodity"
+la var monthpo "month of purchase order"
+la var yearpo "year of purchase order"
+la var moYear "month and year of purchase order"
+la var datecount "number of transactions by date"
+la var mat_count "number of materials procured by day"
+la var cat_count "number of categories procured by day"
+la var totCatValue "total value by commodity"
+la var totMatValue "total value by materials"
+
+saveold "$pathout/ffp_procurement.dta", replace
 
