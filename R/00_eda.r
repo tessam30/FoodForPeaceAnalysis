@@ -38,7 +38,16 @@ df <- rename(df, date = `PO Date`, FY = `Fiscal Year`, mt = `Metric Tons`,
                 prog = Program)
 head(df)
 glimpse(df)  
-  
+
+
+# Fix inconsistent country names for cleaner faceting
+df$country[df$country == "SOUTH SUDAN"] <- "REPUBLIC OF SOUTH SUDAN"
+
+kable(df %>% group_by(country) %>%
+        summarise(count = n()) %>% 
+        arrange(-count))
+
+
 
 # Summary table of materials
 mat_df <- df %>% group_by(commodity) %>%

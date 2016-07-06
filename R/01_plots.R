@@ -14,11 +14,13 @@ library(viridis)     # best. color. palette. evar.
 library(knitr)       # kable : prettier data.frame output
 library(haven)       # read in stata data (.dta)
 library(cowplot)     # combine ggplots into a single graphic
+library(extrafont)
 
 
 # Pull in data from stata file
-setwd("~/GitHub/FoodForPeaceAnalysis/Dataout")
-d <- read_dta("ffp_procurement.dta")
+setwd("~/GitHub/")
+d <- read_dta("~/GitHub/FoodForPeaceAnalysis/Dataout/ffp_procurement.dta")
+
 
 # Create a basic heatmap of the frequency of purchase by the categories; Need to manipulate the dates a bit
 d <- group_by(d, category) %>% mutate(totCount = n())
@@ -37,30 +39,37 @@ d_freq = d %>% group_by(category, moYear, totCount, monthlyCount, sortValue) %>%
 key.events <- data.frame(date=as.Date(c("2011-10-15","2012-10-15","2013-10-15",
                                         "2014-10-15", "2015-10-15", "2016-10-15")))
 p2 <- ggplot(d_freq, aes(moYear, category, fill = count)) + 
-  geom_tile(colour = "gray80", size = 0.25, stat = "identity") +
+  geom_tile(colour = 'white',size = 0.25, stat = "identity") +
   scale_fill_viridis(option="B") + 
-  geom_text(aes(y = category, x = moYear, label = round(count, 0)), size = 4, colour = "gray80") +
+  geom_text(aes(y = category, x = moYear, label = round(count, 0)), size = 2, colour = "gray80") +
   scale_x_date(date_breaks = "3 month", date_labels = "%b-%Y")+
-  geom_vline(data=key.events, colour = "gray80", size = 1, linetype = "dashed",
+  geom_vline(data=key.events, colour = "gray80", size = 0.25, linetype = "dashed",
              aes(xintercept=as.integer(date))) + 
   labs(title = "Peas are the most commonly procured commodity") +
-  theme_fivethirtyeight()
+  theme_fivethirtyeight(base_size = 8)
 
-p1 <- ggplot(d_freq, aes(moYear, y = count)) + geom_bar(stat = "identity") +
-  #scale_x_date(date_breaks = "3 month", date_labels = "%b-%Y") +
-  geom_vline(data=key.events, colour = "gray80", size = 1, linetype = "dashed",
+p1 <- d_freq %>% group_by(moYear) %>% summarise(count = mean(monthlyCount)) %>% 
+  ggplot(aes(moYear, y = count)) + geom_bar(stat = "identity") +
+  scale_x_date(date_breaks = "3 month", date_labels = "%b-%Y") +
+  geom_vline(data=key.events, colour = "gray80", size = 0.25, linetype = "dashed",
              aes(xintercept=as.integer(date))) +
-  scale_y_continuous(breaks = c(0, 25, 50, 75, 100, 125)) + 
-  labs(title = "The most procurements are executed in September", size = 4) +
-  theme_fivethirtyeight()
+  theme_fivethirtyeight(base_size = 8)
+p1
 
-multiplot(p1, p2, cols =1)
-plot_grid(p1, p2, labels = c("A", "B"), align = "v", ncol = 1)  
+plotfreq <- plot_grid(p1, p2, align = "v", ncol = 1, rel_heights=c(1,3))  
+plotfreq
+ggsave("~/GitHub/FoodForPeaceAnalysis/Graphics/freq.pdf", width = 11, height = 5,
+       bg = 'transparent',
+       paper = 'special',
+       units = 'in',
+       useDingbats=FALSE,
+       compress = FALSE,
+       dpi = 300)
 
 
 # Focus on the unit cost average per commodity   
 p4 <- ggplot(d_freq, aes(moYear, sortValue, fill = value)) + 
-  geom_tile(colour = "gray80", size = 0.25, stat = "identity") +
+  geom_tile(colour = 'white', size = 0.25, stat = "identity") +
   scale_fill_viridis(option="D") + 
   scale_x_date(date_breaks = "3 month", date_labels = "%b-%Y")+
   geom_vline(data=key.events, colour = "gray80", size = 1, linetype = "dashed",
@@ -76,12 +85,22 @@ p3 <- d_freq %>% group_by(moYear) %>%
   xlab("")+
   geom_vline(data=key.events, colour = "gray80", size = 1, linetype = "dashed",
              aes(xintercept=as.integer(date))) + 
-  labs(title = "XXX") +theme(legend.position="right")+
   theme_fivethirtyeight() 
 p3
     
-plotall <- plot_grid(p1, p2, p3, p4, labels = c("A", "B"), align = "v", ncol = 1, rel_heights=c(1,3,1,3)) 
-save_plot("frequencies.pdf", plotall, ncol = 1, useDingbats=FALSE)
+plotvalue <- plot_grid(p3, p4, align = "v", ncol = 1, rel_heights=c(1,3))
+plotvalue
+ggsave("~/GitHub/FoodForPeaceAnalysis/Graphics/values.pdf", width = 11, height = 5,
+       bg = 'transparent',
+       paper = 'special',
+       units = 'in',
+       useDingbats=FALSE,
+       compress = FALSE,
+       dpi = 300)
+
+
+
+
 
 
  
