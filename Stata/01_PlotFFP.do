@@ -20,6 +20,8 @@ mean po_unitcost if inlist(category, "Peas"), over(monthpo)
 coefplot
 reg po_unitcost ib(2013).yearpo ib(8).monthpo podate if inlist(category, "Peas")
 
+twoway (histogram po_unitcost if inlist(category, "Peas")) if monthpo!=10, by(monthpo)
+
 
 mean po_unitcost mat_count if inlist(material, "LENTILS BAG-50 KG"), over(monthpo)
 coefplot

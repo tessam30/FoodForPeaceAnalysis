@@ -168,11 +168,15 @@ gen wgttype = regexs(0) if(regexm(wgt, "[A-Z]*$"))
 la var wgt "commodity weight"
 la var wgttype "commodity weight type"
 
+* FORKING PATH POINT?*
+* Reset povalue to be in 2011 real dollars (Adjusting for inflation using CPI from BLS)
+rename povalue povalue2
+rename povalue_2011 povalue
+
 * Potential unit cost?
 g po_unitcost = povalue / metrictons
 
 * TO DO:Create a few common groupings for the commodities
-
 
 *
 * For now, we are filtering on only Title II programming
