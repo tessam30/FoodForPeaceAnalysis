@@ -32,12 +32,14 @@ d$category <- as.factor(d$category)
 d$category <- factor(d$category, levels = d$category[order(d$totCount)])
 d$sortValue <- d$category
 d$sortValue <- factor(d$sortValue, levels = d$sortValue[order(d$totCatValue)])
-d$sortValue2 <- 
 
 
 d_freq = d %>% group_by(category, moYear, totCount, monthlyCount, sortValue) %>% 
   summarise(count = n(), value = sum(povalue)/1000000, mean_value = mean(po_unitcost)) %>% 
   arrange(category, -count)
+
+
+d_spread <- spread(category, count)
 
 # Order the commodities by total count variable for graphing
 key.events <- data.frame(date=as.Date(c("2011-10-15","2012-10-15","2013-10-15",
