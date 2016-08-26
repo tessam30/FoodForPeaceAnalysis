@@ -13,6 +13,10 @@ capture log close
 
 use "$pathout/ffp_procurement.dta", clear
 
+* Create tables for numbers matching sankey plots
+preserve 
+collapse (sum) povalue, by(category)
+
 
 
 * First, look at the distribution of prices by month for a single commodity
