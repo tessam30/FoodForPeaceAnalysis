@@ -55,26 +55,89 @@ read_excel_allsheets <- function(filename) {
                 "Reference PO Number", "Reference PO Item Number",
                 "Vessel ID","Product Name")
 
-  df_ffp[cols.conv] <- sapply(df_ffp[cols.conv],as.numeric)
+  df_ffp[cols.conv] <- sapply(df_ffp[cols.conv], as.numeric)
   sapply(df_ffp[cols.conv], class)
   
 # Remove rows that are missing transaction numbers -- these are necessary to be a valid entry  
-  df_ffp = df_ffp %>%  filter(!is.na(`Transaction Number`))
+  ffp = df_ffp %>%  
+    
+    # Remove empty rows at the end 
+    filter(!is.na(`Transaction Number`)) %>% 
+    
+    # Create basic date information for the creation date
+    # TODO: Verify this is the correct variable to be using for this task. 
+    mutate(CreationMonth = month(`Creation Date`),
+           CreationDay = wday(`Creation Date`, label=TRUE)
+           )
   
-# Drop empty rows from datafram
+# Dates -- Fix the dates to include fiscal years and quarters.
+  fy.tmp <- seq( as.POSIXct('2011-10-01'), length = 6, by = 'year')
+  
+  # Create Fiscal year dummies and Fiscal Quarter dummies
+  ffp = ffp  %>% 
+    
+    # Fiscal year variables to flag transactions occuring during USAID fiscal calendar
+    mutate(FiscalYear = ifelse(`Creation Date` < "2011-10-01", 2011, 
+                               ifelse(`Creation Date` >= "2011-10-01" & `Creation Date` < "2012-10-01", 2012,
+                                      ifelse(`Creation Date` >= "2012-10-01" & `Creation Date` < "2013-10-01", 2013,
+                                             ifelse(`Creation Date`  >= "2013-10-01" & `Creation Date` < "2014-10-01", 2014,
+                                                    ifelse(`Creation Date`  >= "2014-10-01" & `Creation Date` < "2015-10-01", 2015,
+                                                           ifelse(`Creation Date`  >= "2015-10-01" & `Creation Date` < "2016-10-01", 2016, 0)))))),
+           # Create fiscal quarters to use as filters
+           FiscalQtr = case_when(ffp$CreationMonth %in% 10:12 ~ 1,
+                                 ffp$CreationMonth %in% 1:3 ~ 2,
+                                 ffp$CreationMonth %in% 4:6 ~ 3,
+                                 ffp$CreationMonth %in% 7:10 ~ 4,
+                                 TRUE ~ NA_real_),
+           deliveryTime = as.period(`End Delivery Date` - `Start Delivery Date`, units = "days"),   
+           
+           
+           # Create binary variables for rapid filtering
+           titleII = ifelse(grepl("480-TITLE_II", `Functional Area`), 1, 0),
+           bulkProduct = ifelse(grepl("BULK", `Product Short Text`), 1, 0),
+           bulkCategory = ifelse(grepl("BULK", `Category Description`), 1, 0)
+           
+           )
+
+             
+             
+             
+             
+             ifelse(CreationMonth %in% c(10, 11, 12), 1, 
+                              ifelse(CreationMonth %in% c())))
+                               
+                               
+                               
+                           
+  
+  
 
 # write a cut of data to .csv
   write.csv(df_ffp, "ffp_procurement.csv")
 
 
-# Answer a few question
-# 1.	How many total metric tons were purchased
+# Create a function to produce a table to answer the question. 
+  
+  
+  
+  
+
+  # 1.	How many total metric tons were purchased
+  
+  
+  
+  
+  
+  
 df_ffp %>%  filter(`Functional Area` != "NA") %>% 
   group_by(`Functional Area`) %>% 
   summarise(MT = sum(`Quantity in Net Metric Tons MT`), 
             count = n()) %>% 
   mutate(totMT = sum(MT, na.rm=TRUE)) %>% 
-  arrange(desc(totMT)) %>% 
+  arrange(desc(totMT)) 
+
+
+%>% 
   #kable()
   ggplot(., aes(MT, fct_reorder(`Functional Area`, MT), label = comma_format()(round(MT)))) +
   geom_point(size = 7, color = "grey50") +
@@ -136,8 +199,8 @@ df_ffp %>% group_by(`Functional Area`, `Category Description`) %>%
   geom_text(aes(label = comma_format()(round(MT)), y = MT-(0.05*MT), size = 5))
 
 
-# c.	for all packaged commodities
-# d.	for all bulk commodities
+c.	for all packaged commodities
+d.	for all bulk commodities
 
 #e.	for each vendor
 df_ffp %>%   filter(`Functional Area` == "480-TITLE_II") %>% 
@@ -152,11 +215,11 @@ df_ffp %>%   filter(`Functional Area` == "480-TITLE_II") %>%
 
 
 
-# f.	by vendor plant location
+f.	by vendor plant location
 
 
 
-# g.	by load port/terminal
+g.	by load port/terminal
 
 
 
