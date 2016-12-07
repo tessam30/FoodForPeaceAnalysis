@@ -71,7 +71,7 @@ read_excel_allsheets <- function(filename) {
            )
   
 # Dates -- Fix the dates to include fiscal years and quarters.
-  fy.tmp <- seq( as.POSIXct('2011-10-01'), length = 6, by = 'year')
+#  fy.tmp <- seq( as.POSIXct('2011-10-01'), length = 6, by = 'year')
   
   # Create Fiscal year dummies and Fiscal Quarter dummies
   ffp = ffp  %>% 
@@ -90,7 +90,7 @@ read_excel_allsheets <- function(filename) {
                                  ffp$CreationMonth %in% 7:10 ~ 4,
                                  TRUE ~ NA_real_),
            deliveryTime = as.period(`End Delivery Date` - `Start Delivery Date`, units = "days"),   
-           
+           durationFlag = ifelse(`Creation Date` >= "2012-04-01" & `Creation Date` < "2016-10-01", 1, 0),
            
            # Create binary variables for rapid filtering
            titleII = ifelse(grepl("480-TITLE_II", `Functional Area`), 1, 0),
@@ -100,18 +100,6 @@ read_excel_allsheets <- function(filename) {
            )
 
              
-             
-             
-             
-             ifelse(CreationMonth %in% c(10, 11, 12), 1, 
-                              ifelse(CreationMonth %in% c())))
-                               
-                               
-                               
-                           
-  
-  
-
 # write a cut of data to .csv
   write.csv(df_ffp, "ffp_procurement.csv")
 
@@ -123,18 +111,16 @@ read_excel_allsheets <- function(filename) {
   
 
   # 1.	How many total metric tons were purchased
-  
-  
-  
-  
-  
-  
-df_ffp %>%  filter(`Functional Area` != "NA") %>% 
-  group_by(`Functional Area`) %>% 
-  summarise(MT = sum(`Quantity in Net Metric Tons MT`), 
+  ffp %>%  filter(`Functional Area` != "NA") %>% 
+    group_by(`Functional Area`, FiscalYear) %>% 
+    summarise(MT = sum(`Quantity in Net Metric Tons MT`), 
             count = n()) %>% 
-  mutate(totMT = sum(MT, na.rm=TRUE)) %>% 
-  arrange(desc(totMT)) 
+    mutate(totMT = sum(MT, na.rm=TRUE)) %>% 
+    arrange(desc(totMT)) %>% 
+    select(-count) %>% 
+    spread(FiscalYear, MT) %>% 
+    kable()
+
 
 
 %>% 
