@@ -21,7 +21,7 @@ library(forcats)
 library(scales)
 
 
-setwd("C:/Users/t/Documents/FoodForPeace/Datain/")
+setwd("C:/Users/Tim/Documents/FoodForPeace/Datain/")
 
 read_excel_allsheets <- function(filename) {
 
@@ -103,14 +103,10 @@ read_excel_allsheets <- function(filename) {
 # write a cut of data to .csv
   write.csv(df_ffp, "ffp_procurement.csv")
 
-
+# TODO:
 # Create a function to produce a table to answer the question. 
   
-  
-  
-  
-
-  # 1.	How many total metric tons were purchased
+# 1.	How many total metric tons were purchased
   ffp %>%  filter(`Functional Area` != "NA") %>% 
     group_by(`Functional Area`, FiscalYear) %>% 
     summarise(MT = sum(`Quantity in Net Metric Tons MT`), 
@@ -119,22 +115,32 @@ read_excel_allsheets <- function(filename) {
     arrange(desc(totMT)) %>% 
     select(-count) %>% 
     spread(FiscalYear, MT) %>% 
+    
+    # Move totMT to the end of the table
+    select(-totMT, everything()) %>% 
     kable()
 
 
-
-%>% 
-  #kable()
-  ggplot(., aes(MT, fct_reorder(`Functional Area`, MT), label = comma_format()(round(MT)))) +
-  geom_point(size = 7, color = "grey50") +
-  geom_segment(aes(x = 0, y = `Functional Area`, xend = MT, 
-                   yend = `Functional Area`), color = "grey50", size = 1.25)+
-  geom_text(inherit.aes = TRUE, hjust = -0.25, color = "grey50") +
-  labs(
-    title = "Nearly 7 Million tonnes of food aid were purchased under 480 Title II",
-    #subtitle = "Two seaters (sports cars) are an exception because of their light weight",
-    caption = "Data Office of Food For Peace"
-  ) + theme(legend.position="none") + scale_x_continuous(labels = comma, limits = c(0, 8e6))
+  # b.	for each of the commodities (sort commodities by functional area)
+  ffp %>%  filter(`Functional Area` != "NA") %>% 
+    group_by(`Functional Area`, FiscalYear) %>% 
+    summarise(MT = sum(`Quantity in Net Metric Tons MT`), 
+              count = n()) %>% 
+    mutate(totMT = sum(MT, na.rm=TRUE),
+           maxMT = max(totMT)) %>% 
+    arrange(desc(totMT)) %>% 
+    ggplot(., aes(MT, fct_reorder(`Functional Area`, MT), label = comma_format()(round(MT)))) +
+    geom_point(size = 7, color = "grey50") +
+    geom_segment(aes(x = 0, y = `Functional Area`, xend = MT, 
+                     yend = `Functional Area`), color = "grey50", size = 1.25) +
+    facet_wrap(~FiscalYear) +
+    geom_text(inherit.aes = TRUE, hjust = -0.25, color = "grey50")+
+    labs(
+      title = "Nearly 7 Million tonnes of food aid were purchased under 480 Title II",
+      #subtitle = "Two seaters (sports cars) are an exception because of their light weight",
+      caption = "Data Office of Food For Peace"
+      ) + 
+    theme(legend.position="none") + scale_x_continuous(labels = comma, limits = c(0, 2.25e6))
   
   
   # #ggplot(., aes(fct_reorder(`Functional Area`, MT), MT)) + 
@@ -150,8 +156,19 @@ read_excel_allsheets <- function(filename) {
 
 
 # b.	for each of the commodities (sort commodities by functional area)
+  ffp %>%  filter(`Functional Area` != "NA") %>% 
+    group_by(`Functional Area`, `Category Description`, FiscalYear) %>% 
+    summarise(MT = sum(`Quantity in Net Metric Tons MT`), 
+              count = n()) %>% 
+    mutate(totMT = sum(MT, na.rm=TRUE)) %>% 
+    arrange(desc(totMT)) %>% 
+    select(-count) %>% 
+    spread(FiscalYear, MT) %>% 
+    select(-totMT, everything()) %>% 
+    kable()
+  
 
-df_ffp %>% group_by(`Functional Area`, `Category Description`) %>% 
+ffp %>% group_by(`Functional Area`, `Category Description`) %>% 
   #filter(!is.na(`Functional Area`)) %>% 
   filter(`Functional Area` == "480-TITLE_II") %>% 
   summarise(MT = sum(`Quantity in Net Metric Tons MT`), na.rm = TRUE, 
@@ -160,9 +177,6 @@ df_ffp %>% group_by(`Functional Area`, `Category Description`) %>%
          share = MT / totMT,
          sortvar = fct_reorder(`Category Description`, MT)) %>% 
   arrange(desc(MT, count, totMT)) %>% 
-
-
-%>% 
   ggplot(., aes(MT, sortvar)) + 
   geom_point(size = 5, color = "grey50")+
   geom_segment(aes(x = 0, y = `Category Description`, 
@@ -174,8 +188,7 @@ df_ffp %>% group_by(`Functional Area`, `Category Description`) %>%
     title = "Bulk grain products constitute the largest volumne of 480 Title II procurements",
     #subtitle = "Two seaters (sports cars) are an exception because of their light weight",
     caption = "Data Office of Food For Peace"
-  )
-  #+
+  ) #+
   #geom_text(aes(label = comma_format()(round(MT)), x = MT+(0.1*MT), size = 5))
   
   
