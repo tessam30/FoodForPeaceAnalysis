@@ -106,7 +106,30 @@ read_excel_allsheets <- function(filename) {
 # TODO:
 # Create a function to produce a table to answer the question. 
   
-# 1.	How many total metric tons were purchased
+# 1.	How many total metric tons were purchased:
+  ffp %>% filter(`Functional Area` != "NA") %>% 
+    group_by(`Functional Area`, ) %>% 
+    summarise(MT = sum(`Quantity in Net Metric Tons MT`), 
+              count = n()) %>% 
+    mutate(totMT = sum(MT, na.rm=TRUE)) %>% 
+    arrange(desc(totMT)) %>% 
+    select(-count) %>% 
+    spread(FiscalYear, MT) %>% 
+    
+    # Move totMT to the end of the table
+    select(-totMT, everything()) %>% 
+    kable()
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+# 2. By fiscal year  
   ffp %>%  filter(`Functional Area` != "NA") %>% 
     group_by(`Functional Area`, FiscalYear) %>% 
     summarise(MT = sum(`Quantity in Net Metric Tons MT`), 
@@ -199,6 +222,9 @@ ffp %>% group_by(`Functional Area`, `Category Description`) %>%
 
 
 c.	for all packaged commodities
+
+
+
 d.	for all bulk commodities
 
 #e.	for each vendor
