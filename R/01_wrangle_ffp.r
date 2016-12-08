@@ -121,9 +121,10 @@ read_excel_allsheets <- function(filename) {
     summarise(MT = sum(`Quantity in Net Metric Tons MT`), 
               count = n()) %>% 
     mutate(totMT = sum(MT, na.rm=TRUE)) %>% 
-    arrange(functArea, MT) %>% 
+    #arrange(desc(MT), functArea) %>% 
     select(-count) %>% 
     spread(FiscalYear, MT) %>% 
+    arrange(-totMT) %>% 
     
     # Move totMT to the end of the table
     select(-totMT, everything())  %>% 
