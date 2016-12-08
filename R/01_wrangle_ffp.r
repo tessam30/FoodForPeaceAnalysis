@@ -19,6 +19,7 @@ library(lubridate)
 library(knitr)
 library(forcats)
 library(scales)
+library(formattable)
 
 
 setwd("C:/Users/Tim/Documents/FoodForPeace/Datain/")
@@ -96,8 +97,8 @@ read_excel_allsheets <- function(filename) {
            titleII = ifelse(grepl("480-TITLE_II", `Functional Area`), 1, 0),
            bulkProduct = ifelse(grepl("BULK", `Product Short Text`), 1, 0),
            bulkCategory = ifelse(grepl("BULK", `Category Description`), 1, 0)
-           
-           )
+           ) %>% 
+    rename(functArea = `Functional Area`)
 
              
 # write a cut of data to .csv
@@ -106,19 +107,27 @@ read_excel_allsheets <- function(filename) {
 # TODO:
 # Create a function to produce a table to answer the question. 
   
+# First, consider the basic tabulation of the functional areas by fiscal year  
+  ffp %>% 
+    count(functArea, FiscalYear) %>% 
+    arrange(-n, FiscalYear) %>% 
+    spread(FiscalYear, n) %>% 
+    kable()
+  
 # 1.	How many total metric tons were purchased:
-  ffp %>% filter(`Functional Area` != "NA") %>% 
-    group_by(`Functional Area`, ) %>% 
+  
+  ffp %>% filter(functArea != "NA") %>% 
+    group_by(functArea, FiscalYear ) %>% 
     summarise(MT = sum(`Quantity in Net Metric Tons MT`), 
               count = n()) %>% 
     mutate(totMT = sum(MT, na.rm=TRUE)) %>% 
-    arrange(desc(totMT)) %>% 
+    arrange(functArea, MT) %>% 
     select(-count) %>% 
     spread(FiscalYear, MT) %>% 
     
     # Move totMT to the end of the table
-    select(-totMT, everything()) %>% 
-    kable()
+    select(-totMT, everything())  %>% 
+    kable(format.args = list(big.mark = ","), digits = 0)
   
   
   
