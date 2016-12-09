@@ -22,7 +22,7 @@ library(scales)
 library(formattable)
 
 
-setwd("C:/Users/Tim/Documents/FoodForPeace/Datain/")
+setwd("C:/Users/t/Documents/FoodForPeace/Datain/")
 
 read_excel_allsheets <- function(filename) {
 
@@ -106,6 +106,24 @@ read_excel_allsheets <- function(filename) {
 
 # TODO:
 # Create a function to produce a table to answer the question. 
+   tot_MT = function(data, ...) {
+    data %>% 
+      group_by_(.dots = lazyeval::lazy_dots(...)) %>% 
+      summarise(MT = sum(`Quantity in Net Metric Tons MT`)) %>% 
+      mutate(totMT = sum(MT, na.rm = TRUE)) %>% 
+      spread(FiscalYear, MT) %>% 
+      select(-totMT, everything()) %>% 
+      arrange(-totMT) %>% 
+      kable(format.args = list(big.mark = ","), digits = 0)  
+  }
+  
+  tot_MT(ffp, functArea, FiscalYear)
+  
+  ffp %>% filter(titleII == 1) %>% tot_MT(., `Category Description`, FiscalYear)
+ 
+  ffp %>% filter(titleII == 1) %>% tot_MT(.,  Vend.Pl.Name, FiscalYear)
+  
+  
   
 # First, consider the basic tabulation of the functional areas by fiscal year  
   ffp %>% 
@@ -115,6 +133,7 @@ read_excel_allsheets <- function(filename) {
     kable()
   
 # 1.	How many total metric tons were purchased:
+ fmt <- format.args = list(big.mark = ",")
   
   ffp %>% filter(functArea != "NA") %>% 
     group_by(functArea, FiscalYear ) %>% 
@@ -130,6 +149,26 @@ read_excel_allsheets <- function(filename) {
     select(-totMT, everything())  %>% 
     kable(format.args = list(big.mark = ","), digits = 0)
   
+  # Foreach commodity 
+  ffp %>% filter(titleII == 1) %>%  
+    group_by(`Category Description`, FiscalYear) %>% 
+    summarise(MT = sum(`Quantity in Net Metric Tons MT`))%>% 
+    mutate(totMT = sum(MT, na.rm = TRUE)) %>% 
+    spread(FiscalYear, MT) %>% 
+    select(-totMT, everything()) %>% 
+    arrange(-totMT) %>% 
+    kable(format.args = list(big.mark = ","), digits = 0)
+ 
+  # by each vendor plant name
+  ffp %>% filter(titleII == 1) %>% 
+    group_by(Vend.Pl.Name, FiscalYear)%>% 
+    summarise(MT = sum(`Quantity in Net Metric Tons MT`)) %>% 
+    mutate(totMT = sum(MT, na.rm = TRUE)) %>% 
+    spread(FiscalYear, MT) %>% 
+    select(-totMT, everything()) %>% 
+    arrange(-totMT) %>% 
+    kable(format.args = list(big.mark = ","), digits = 0)   
+
   
   
   
@@ -189,7 +228,7 @@ read_excel_allsheets <- function(filename) {
 
 
 # b.	for each of the commodities (sort commodities by functional area)
-  ffp %>%  filter(`Functional Area` != "NA") %>% 
+  ffp %>%  filter(`functArea` != "NA") %>% 
     group_by(`Functional Area`, `Category Description`, FiscalYear) %>% 
     summarise(MT = sum(`Quantity in Net Metric Tons MT`), 
               count = n()) %>% 
