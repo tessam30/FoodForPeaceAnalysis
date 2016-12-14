@@ -1,6 +1,6 @@
 # Food for Peace Procurement Data Analysis -----------------------------------------
 #
-# 01_FFP_combine: calculate improved latrine percentages
+# 01_wrangle_ffp.r Combine FFP data into a single data frame
 #
 # Script to combine excel files into a single dataframe
 # 
@@ -68,6 +68,7 @@ read_excel_allsheets <- function(filename) {
     # Create basic date information for the creation date
     # TODO: Verify this is the correct variable to be using for this task. 
     mutate(CreationMonth = month(`Creation Date`),
+           
            CreationDay = wday(`Creation Date`, label=TRUE)
            )
   
@@ -96,16 +97,32 @@ read_excel_allsheets <- function(filename) {
            # Create binary variables for rapid filtering
            titleII = ifelse(grepl("480-TITLE_II", `Functional Area`), 1, 0),
            bulkProduct = ifelse(grepl("BULK", `Product Short Text`), 1, 0),
-           bulkCategory = ifelse(grepl("BULK", `Category Description`), 1, 0)
+           bulkCategory = ifelse(grepl("BULK", `Category Description`), 1, 0),
+           CreationMonth = factor(CreationMonth, levels=1:12, labels=month.name)
+           
            ) %>% 
     rename(functArea = `Functional Area`)
 
              
 # write a cut of data to .csv
   write.csv(df_ffp, "ffp_procurement.csv")
+  
+# TODO: GeoCode  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
 # TODO:
-# Create a function to produce a table to answer the question. 
+# Create a function for Fiscal Year related questions to produce a table to answer the question. 
    tot_MT = function(data, ...) {
     data %>% 
       group_by_(.dots = lazyeval::lazy_dots(...)) %>% 
@@ -119,9 +136,11 @@ read_excel_allsheets <- function(filename) {
   
   tot_MT(ffp, functArea, FiscalYear)
   
-  ffp %>% filter(titleII == 1) %>% tot_MT(., `Category Description`, FiscalYear)
+  ffp %>% filter(titleII == 1) %>% 
+    tot_MT(., `Category Description`, FiscalYear)
  
-  ffp %>% filter(titleII == 1) %>% tot_MT(.,  Vend.Pl.Name, FiscalYear)
+  ffp %>% filter(titleII == 1) %>% 
+    tot_MT(.,  Vend.Pl.Name, FiscalYear)
   
   
   
