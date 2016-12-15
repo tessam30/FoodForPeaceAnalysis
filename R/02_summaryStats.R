@@ -63,12 +63,12 @@
    # By vendor place location -- only printing top 25 results
   ffp %>% filter(titleII == 1) %>% 
     tot_MT(.,  Vend.Pl.Name, FiscalYear) %>% 
-    grpfmt()
+    grpfmt() %>% fmt()
   
   # By load port/terminal --> quite a few NAs in the Load Port Terminal Name
   ffp %>% filter(titleII == 1) %>% 
     tot_MT(., `LoadPort Term.Name`, FiscalYear) %>% 
-    grpfmt()
+    grpfmt() %>%  fmt()
 
 # -------------------------------------------------------------------------------
   
@@ -84,12 +84,12 @@
   
   # CMetric Tons purchased each quarter
   tot_MTQ(ffp, functArea, FiscalQtr) %>% 
-    kable(format.args = list(big.mark = ","), digits = 0)
+    fmt()
   
   # What does this look like by Fiscal Quarter and Fiscal Year (sorted by month)
   ffp %>% filter(titleII == 1) %>% 
     tot_MT(., FiscalQtr, FiscalYear) %>% 
-    kable(format.args = list(big.mark = ","), digits = 0)
+    fmt()
   
   # For each of the commodities
   # By Category Description
@@ -127,7 +127,7 @@
 
   # CMetric Tons purchased each month
   tot_MTM(ffp, functArea, CreationMonth) %>% 
-        kable(format.args = list(big.mark = ","), digits = 0)
+        fmt()
   
  # What does this look like by Creation month and Fiscal Year (sorted by month)
    ffp %>% filter(titleII == 1) %>% 
@@ -162,34 +162,40 @@
      data %>% filter(durationFlag == 1) %>% 
        group_by_(.dots = lazyeval::lazy_dots(...)) %>% 
        summarise(MT = sum(`Quantity in Net Metric Tons MT`)) %>% 
-       mutate(totMT = sum(MT, na.rm = TRUE)) %>% 
+       mutate(share =  MT / sum(MT, na.rm = TRUE)) %>% 
        #spread(CreationMonth, MT) %>% 
-       select(-totMT, everything()) %>% 
-       arrange(-totMT, -MT)
+       select(-MT, -share, everything()) %>% 
+       arrange(-MT, -share)
    }
-    
+ 
+   fmt2 = function(data, ...) {
+     data %>% 
+       kable(format.args = list(big.mark = ","), digits = c(0, 0, 2)) 
+   } 
+     
+# By functional category
  tot_MTF(ffp, functArea) %>% 
-   fmt()
+   fmt2()
  
  # By Category Description
  ffp %>% filter(titleII == 1) %>% 
    tot_MTF(., `Category Description`) %>% 
-   fmt() 
+   fmt2() 
  
  # By vendor name -- only printing top 25 results
  ffp %>% filter(titleII == 1) %>% 
    tot_MTF(.,  `Vendor Name`) %>% 
-   grpfmt() %>% fmt()
+   grpfmt() %>% fmt2()
  
  # By vendor place location -- only printing top 25 results
  ffp %>% filter(titleII == 1) %>% 
    tot_MTF(.,  Vend.Pl.Name) %>% 
-   grpfmt() %>%  fmt()
+   grpfmt() %>%  fmt2()
  
  # By load port/terminal --> quite a few NAs in the Load Port Terminal Name
  ffp %>% filter(titleII == 1) %>% 
    tot_MTF(., `LoadPort Term.Name`) %>% 
-   grpfmt() %>%  fmt()
+   grpfmt() %>%  fmt2()
  
 # -------------------------------------------------------------------------
 # Question 5. What was the total average commodity cost per metric ton?
