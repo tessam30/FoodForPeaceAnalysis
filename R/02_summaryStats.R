@@ -18,7 +18,6 @@
 # Create a function to produce a table to answer the question. 
 # only current input is the group by variables
  
-
  tot_MT = function(data, ...) {
       data %>% 
         group_by_(.dots = lazyeval::lazy_dots(...)) %>% 
@@ -68,7 +67,7 @@
   # By load port/terminal --> quite a few NAs in the Load Port Terminal Name
   ffp %>% filter(titleII == 1) %>% 
     tot_MT(., `LoadPort Term.Name`, FiscalYear) %>% 
-    grpfmt() %>%  fmt()
+    grpfmt(., beg=1, end =100) %>%  fmt()
 
 # -------------------------------------------------------------------------------
   
@@ -170,7 +169,7 @@
  
    fmt2 = function(data, ...) {
      data %>% 
-       kable(format.args = list(big.mark = ","), digits = c(0, 0, 2)) 
+       kable(format.args = list(big.mark = ","), digits = c(0, 0, 3)) 
    } 
      
 # By functional category
@@ -197,16 +196,148 @@
    tot_MTF(., `LoadPort Term.Name`) %>% 
    grpfmt() %>%  fmt2()
  
-# -------------------------------------------------------------------------
+
+ 
+ 
+ # -------------------------------------------------------------------------
 # Question 5. What was the total average commodity cost per metric ton?
- ffp %>% group_by(functArea, FiscalYear) %>% 
-   summarise(avePrice = mean(`Total Intl Comm Pric`, na.rm = TRUE)) %>% 
-   #spread(FiscalYear) %>% 
-   #select(-avePrice, everything()) %>% 
-   #arrange( -avePrice) %>% 
-   fmt()
+ # All Commodities
+ 
+ # Chunk to summarize, spread, select, arrange, and format
+  test <- function(data, col_name1, ...){
+    # Convert character vector to list of symbols
+      dots <- lapply(col_name1, as.symbol)
+      data %>% 
+      group_by_(.dots = dots)) %>% 
+      mutate(avp = mean(`Total Intl Comm Pric`, na.rm = TRUE)) %>% 
+      ungroup() %>% 
+      
+      # Need to pass a new set of .dots through group_by_
+      dots2 <- lapply()
+      
+  }
+
  
 
-   
+ 
+ 
+ 
+  ffp %>% group_by(functArea) %>% 
+   mutate(avePrice_fa = mean(`Total Intl Comm Pric`, na.rm = TRUE),
+          count = n()) %>% 
+   group_by(functArea, FiscalYear, avePrice_fa, count) %>% 
+   summarize(avePrice_FY = mean(`Total Intl Comm Pric`, na.rm = TRUE)) %>% 
+   spread(FiscalYear, avePrice_FY) %>% 
+   select(-avePrice_fa, -count, everything()) %>%
+   arrange(desc(count, avePrice_fa)) %>% 
+   fmt()
+ 
+ 
+ #Only tittle II purchases
+ ffp %>% 
+   filter(titleII == 1) %>% 
+   group_by(`Category Description`) %>% 
+   mutate(avePrice_cd = mean(`Total Intl Comm Pric`, na.rm = TRUE),
+          count = n()
+          ) %>% 
+   group_by(FiscalYear, `Category Description`, avePrice_cd, count) %>% 
+   summarize(avePrice_FY = mean(`Total Intl Comm Pric`, na.rm = TRUE))%>% 
+   spread(FiscalYear, avePrice_FY)  %>% 
+   select(-avePrice_cd, -count, everything()) %>%
+   arrange(desc(count), desc(avePrice_cd)) %>% 
+   fmt()
+ 
+ # By vendor name, keeping only top 25
+ ffp %>% 
+   filter(titleII == 1) %>% 
+   group_by(`Vendor Name`) %>% 
+   mutate(avePrice_cd = mean(`Total Intl Comm Pric`, na.rm = TRUE),
+          count = n()) %>% 
+   group_by(FiscalYear, `Vendor Name`, avePrice_cd, count) %>% 
+   summarize(avePrice_FY = mean(`Total Intl Comm Pric`, na.rm = TRUE))%>% 
+   spread(FiscalYear, avePrice_FY)  %>% 
+   select(-avePrice_cd, -count, everything()) %>%
+   arrange(desc(count, avePrice_cd)) %>% 
+   grpfmt(beg = 1, end = 50) %>% 
+   fmt2()
+ 
+ ffp %>% 
+   filter(titleII == 1) %>% 
+   group_by(Vend.Pl.Name) %>% 
+   mutate(avePrice_cd = mean(`Total Intl Comm Pric`, na.rm = TRUE)) %>% 
+   group_by(FiscalYear, Vend.Pl.Name, avePrice_cd) %>% 
+   summarize(avePrice_FY = mean(`Total Intl Comm Pric`, na.rm = TRUE))%>% 
+   spread(FiscalYear, avePrice_FY)  %>% 
+   select(-avePrice_cd, everything()) %>%
+   arrange(desc(avePrice_cd)) %>% 
+   grpfmt(beg = 1, end = 50) %>% 
+   fmt2()
+ 
+ ffp %>% 
+   filter(titleII == 1) %>% 
+   group_by(`LoadPort Term.Name`) %>% 
+   mutate(avePrice_cd = mean(`Total Intl Comm Pric`, na.rm = TRUE)) %>% 
+   group_by(FiscalYear, `LoadPort Term.Name`, avePrice_cd) %>% 
+   summarize(avePrice_FY = mean(`Total Intl Comm Pric`, na.rm = TRUE),
+             count = n()
+             )%>% 
+   spread(FiscalYear, avePrice_FY)  %>% 
+   select(-avePrice_cd, everything()) %>%
+   arrange(desc(avePrice_cd)) %>% 
+   grpfmt(beg = 1, end = 25) %>% 
+   fmt2()
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ # test <- function(data, col_name, ...) {
+ #   dots <- lapply(col_name, as.symbol)
+ #   
+ #   dots2 <- lapply(c(""))
+ #   
+ #   data %>% 
+ #   filter(titleII == 1) %>% 
+ #  
+ #    group_by_(.dots = dots) %>% 
+ #     mutate(avePrice_cd = mean(`Total Intl Comm Pric`, na.rm = TRUE)) %>% 
+ # 
+ #   
+ # 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+    
+  
+  
+
+ 
+ 
+
 
  

@@ -27,7 +27,7 @@
 |BEHT            |      NA|        NA|        NA| 189,970|      NA|        NA|   189,970|
 |480-TTL_I_GRANT |      NA|    20,000|        NA|      NA|      NA|        NA|    20,000|
 
-* For each commodity for 480-Title II programs
+* For each commodity for 480-Title II programs (Bulk in bold)
 
 |Category Description |    2011|    2012|    2013|    2014|    2015|      2016|     Total|
 |:--------------------|-------:|-------:|-------:|-------:|-------:|---------:|---------:|
@@ -75,7 +75,7 @@
 |M GROUP PARTNERS, LLC               |      NA|      NA|   1,070|   5,430|  11,110|  21,620|    39,230|
 |JM GRAIN, INC.                      |   2,670|   9,540|   7,970|   4,370|   5,570|   7,610|    37,730|
 
-* By vendor plant location for 480-Title II programs
+* By vendor plant (top 25) location for 480-Title II programs
 
 |Vend.Pl.Name                        |    2011|    2012|    2013|    2014|    2015|    2016|     totMT|
 |:-----------------------------------|-------:|-------:|-------:|-------:|-------:|-------:|---------:|
@@ -105,7 +105,7 @@
 |LD COMMODITIES-BEAUMONT TX          |      NA|  34,500|      NA|      NA|      NA|  23,140|    57,640|
 |ADM/BEAUMONT RICE MILL-BEAUMONT TX  |   4,480|   9,360|   6,220|  14,610|   9,310|  11,500|    55,480|
 
-* By load port/terminal for 480-Title II programs
+* By load port/terminal (top 25) for 480-Title II programs
 
 |LoadPort Term.Name                  |    2011|    2012|    2013|    2014|    2015|    2016|     totMT|
 |:-----------------------------------|-------:|-------:|-------:|-------:|-------:|-------:|---------:|
@@ -157,7 +157,7 @@
 |         3| 241,390| 502,710| 170,100| 172,580| 200,640| 264,480| 1,551,902|
 |         1|      NA| 248,080| 221,520| 197,990| 166,620| 483,760| 1,317,971|
 
-* For each commodity for 480-Title II programs
+* For each commodity for 480-Title II programs (Bulk in bold)
 
 |Category Description |       1|         2|       3|         4|     totMT|
 |:--------------------|-------:|---------:|-------:|---------:|---------:|
@@ -205,7 +205,7 @@
 |M GROUP PARTNERS, LLC               |   9,550|  11,850|   9,890|   7,940|    39,230|
 |JM GRAIN, INC.                      |   6,450|   7,910|   9,400|  13,970|    37,730|
 
-* By vendor plant location for 480-Title II programs
+* By vendor plant (top 25) location for 480-Title II programs
 
 |Vend.Pl.Name                        |       1|       2|       3|       4|     totMT|
 |:-----------------------------------|-------:|-------:|-------:|-------:|---------:|
@@ -235,7 +235,7 @@
 |LD COMMODITIES-BEAUMONT TX          |      NA|  23,140|      NA|  34,500|    57,640|
 |ADM/BEAUMONT RICE MILL-BEAUMONT TX  |  19,760|  15,210|   9,510|  11,000|    55,480|
 
-* By load port/terminal for 480-Title II programs
+* By load port/terminal (top 25) for 480-Title II programs
 
 |LoadPort Term.Name                  |       1|       2|       3|       4|     totMT|
 |:-----------------------------------|-------:|-------:|-------:|-------:|---------:|
@@ -343,7 +343,7 @@
 |M GROUP PARTNERS, LLC               |   2,900|    6,070|   2,880|   8,410|     980|    500|   1,470|   1,970|     4,500|     600|      850|    8,100|    39,230|
 |JM GRAIN, INC.                      |   2,720|    4,220|     970|   3,500|   3,140|  2,760|   1,150|   5,250|     7,570|     900|    2,940|    2,610|    37,730|
 
-* By vendor plant location for 480-Title II programs
+* By vendor plant location (top 25) for 480-Title II programs
 
 |Vend.Pl.Name                        | January| February|   March|  April|    May|   June|    July|  August| September| October| November| December|     totMT|
 |:-----------------------------------|-------:|--------:|-------:|------:|------:|------:|-------:|-------:|---------:|-------:|--------:|--------:|---------:|
@@ -373,7 +373,7 @@
 |LD COMMODITIES-BEAUMONT TX          |  23,140|       NA|      NA|     NA|     NA|     NA|      NA|      NA|    34,500|      NA|       NA|       NA|    57,640|
 |ADM/BEAUMONT RICE MILL-BEAUMONT TX  |   7,320|    6,790|   1,100|  9,510|     NA|     NA|   2,330|   7,020|     1,650|   1,750|    9,760|    8,250|    55,480|
 
-* By load port/terminal for 480-Title II programs
+* By load port/terminal (top 25) for 480-Title II programs
 
 |LoadPort Term.Name                  | January| February|   March|   April|    May|   June|    July|  August| September| October| November| December|     totMT|
 |:-----------------------------------|-------:|--------:|-------:|-------:|------:|------:|-------:|-------:|---------:|-------:|--------:|--------:|---------:|
@@ -408,129 +408,116 @@
 
 |functArea      |        MT| share|
 |:--------------|---------:|-----:|
-|480-TITLE_II   | 5,649,446|  0.80|
-|FFPROGRESS_FCC |   915,701|  0.13|
-|107-FFE        |   299,132|  0.04|
-|BEHT           |   189,970|  0.03|
+|480-TITLE_II   | 5,649,446| 0.801|
+|FFPROGRESS_FCC |   915,701| 0.130|
+|107-FFE        |   299,132| 0.042|
+|BEHT           |   189,970| 0.027|
 
 * For each commodity for 480-Title II programs
 
 |Category Description |        MT| share|
 |:--------------------|---------:|-----:|
-|GRAIN PRODUCTS-BULK  | 3,889,320|  0.69|
-|PEAS/LENTILS-PKGD    |   569,210|  0.10|
-|OIL PRODUCTS-PKGD    |   263,755|  0.05|
-|CORN-SOY BLEND-PKGD  |   223,990|  0.04|
-|RICE, MILLED-PKGD    |   199,920|  0.04|
-|CORNMEAL-PKGD        |   154,790|  0.03|
-|GRAIN PRODUCTS-PKGD  |   117,330|  0.02|
-|FLOUR, WHEAT-PKGD    |    97,860|  0.02|
-|BULGUR-PKGD          |    47,560|  0.01|
-|BEANS, DRY-PKGD      |    45,470|  0.01|
-|EMERGENCY PRODS-PKGD |    19,051|  0.00|
-|OIL PRODS,CRUDE-BULK |    13,570|  0.00|
-|WHEAT-SOY BLEND-PKGD |     7,620|  0.00|
+|__GRAIN PRODUCTS-BULK__  | 3,889,320| 0.688|
+|PEAS/LENTILS-PKGD    |   569,210| 0.101|
+|OIL PRODUCTS-PKGD    |   263,755| 0.047|
+|CORN-SOY BLEND-PKGD  |   223,990| 0.040|
+|RICE, MILLED-PKGD    |   199,920| 0.035|
+|CORNMEAL-PKGD        |   154,790| 0.027|
+|GRAIN PRODUCTS-PKGD  |   117,330| 0.021|
+|FLOUR, WHEAT-PKGD    |    97,860| 0.017|
+|BULGUR-PKGD          |    47,560| 0.008|
+|BEANS, DRY-PKGD      |    45,470| 0.008|
+|EMERGENCY PRODS-PKGD |    19,051| 0.003|
+|__OIL PRODS,CRUDE-BULK__ |    13,570| 0.002|
+|WHEAT-SOY BLEND-PKGD |     7,620| 0.001|
 
 * For the top 25 vendors for 480-Title II programs
 
 |Vendor Name                         |        MT| share|
 |:-----------------------------------|---------:|-----:|
-|CARGILL, INCORPORATED               | 1,300,920|  0.23|
-|LD COMMODITIES GRAINS MERCHANDISING |   858,270|  0.15|
-|ARCHER-DANIELS-MIDLAND COMPANY      |   805,590|  0.14|
-|CHS INC.                            |   608,040|  0.11|
-|KALAMA EXPORT COMPANY LLC           |   287,950|  0.05|
-|DIDION, INC                         |   213,351|  0.04|
-|PREMIER PULSES INTERNATIONAL, INC.  |   155,500|  0.03|
-|ADM RICE INC                        |   151,750|  0.03|
-|COLUMBIA GRAIN, INC.                |   137,530|  0.02|
-|STRATAS FOODS LLC                   |   110,312|  0.02|
-|GEORGE F. BROCKE & SONS, INCORPORAT |   104,430|  0.02|
-|BUNGE MILLING, INC.                 |    95,410|  0.02|
-|DAKOTA DRY BEAN INC.                |    93,700|  0.02|
-|COMMERCIAL LYNKS INC.               |    82,560|  0.01|
-|CAL WESTERN PACKAGING CORPORATION   |    76,482|  0.01|
-|FARMERS' RICE MILLING COMPANY, INC. |    58,070|  0.01|
-|LIFELINE FOODS LLC                  |    46,500|  0.01|
-|LOUISIANA RICE MILL, L.L.C.         |    44,260|  0.01|
-|BUNGE NORTH AMERICA, INC.           |    40,740|  0.01|
-|M GROUP PARTNERS, LLC               |    39,230|  0.01|
-|BARTLETT MILLING COMPANY, L.P.      |    38,240|  0.01|
-|GUIDRY LIASON GROUP, INC.           |    35,930|  0.01|
-|JM GRAIN, INC.                      |    33,560|  0.01|
-|CFC, INC.                           |    32,691|  0.01|
-|RICELAND FOODS, INC                 |    24,390|  0.00|
+|CARGILL, INCORPORATED               | 1,300,920| 0.230|
+|LD COMMODITIES GRAINS MERCHANDISING |   858,270| 0.152|
+|ARCHER-DANIELS-MIDLAND COMPANY      |   805,590| 0.143|
+|CHS INC.                            |   608,040| 0.108|
+|KALAMA EXPORT COMPANY LLC           |   287,950| 0.051|
+|DIDION, INC                         |   213,351| 0.038|
+|PREMIER PULSES INTERNATIONAL, INC.  |   155,500| 0.028|
+|ADM RICE INC                        |   151,750| 0.027|
+|COLUMBIA GRAIN, INC.                |   137,530| 0.024|
+|STRATAS FOODS LLC                   |   110,312| 0.020|
+|GEORGE F. BROCKE & SONS, INCORPORAT |   104,430| 0.018|
+|BUNGE MILLING, INC.                 |    95,410| 0.017|
+|DAKOTA DRY BEAN INC.                |    93,700| 0.017|
+|COMMERCIAL LYNKS INC.               |    82,560| 0.015|
+|CAL WESTERN PACKAGING CORPORATION   |    76,482| 0.014|
+|FARMERS' RICE MILLING COMPANY, INC. |    58,070| 0.010|
+|LIFELINE FOODS LLC                  |    46,500| 0.008|
+|LOUISIANA RICE MILL, L.L.C.         |    44,260| 0.008|
+|BUNGE NORTH AMERICA, INC.           |    40,740| 0.007|
+|M GROUP PARTNERS, LLC               |    39,230| 0.007|
+|BARTLETT MILLING COMPANY, L.P.      |    38,240| 0.007|
+|GUIDRY LIASON GROUP, INC.           |    35,930| 0.006|
+|JM GRAIN, INC.                      |    33,560| 0.006|
+|CFC, INC.                           |    32,691| 0.006|
+|RICELAND FOODS, INC                 |    24,390| 0.004|
 
 
 * By vendor plant location for 480-Title II programs
 
 |Vend.Pl.Name                        |        MT| share|
 |:-----------------------------------|---------:|-----:|
-|CARGILL-HOUSTON TX                  | 1,298,170|  0.23|
-|LD COMMODITIES-HOUSTON TX           |   712,340|  0.13|
-|ADM-CORPUS CHRISTI TX               |   454,720|  0.08|
-|CHS INC-ST PAUL MN                  |   406,020|  0.07|
-|KALAMA EXPORT CO LLC-KALAMA OR      |   287,950|  0.05|
-|ADM-GALVESTON TX                    |   217,190|  0.04|
-|DIDION INC-CAMBRIA WI               |   176,460|  0.03|
-|PREMIER PULSES/UNITED PULSE-WILLIST |   130,700|  0.02|
-|COLUMBIA GRAIN INC-LOMBARD-PORTLAND |   114,120|  0.02|
-|STRATAS FOODS-HOUSTON               |   108,272|  0.02|
-|CHS/TEMCO IRVING-PORTLAND OR        |   105,090|  0.02|
-|CHS INC-MYRTLE GROVE LA             |    92,820|  0.02|
-|DAKOTA DRY BEAN/RHPP-HOUSTON TX     |    91,950|  0.02|
-|BUNGE MILLING-CRETE NE              |    88,490|  0.02|
-|LD COMMODITIES-PORTLAND OR          |    88,290|  0.02|
-|ADM RICE-DESTREHAN LA               |    82,040|  0.01|
-|GEORGE F BROCKE/VITERRA-MINOT ND    |    81,310|  0.01|
-|CAL WESTERN PACKAGING-HOUSTON TX    |    63,921|  0.01|
-|FARMERS RICE-LAKE CHARLES LA        |    58,070|  0.01|
-|LD COMMODITIES-BEAUMONT TX          |    57,640|  0.01|
-|ADM/BEAUMONT RICE MILL-BEAUMONT TX  |    46,730|  0.01|
-|LIFELINE FOODS-ST JOSEPH MO         |    46,500|  0.01|
-|ADM-ABILENE KS                      |    38,560|  0.01|
-|BARTLETT MILLING COMPANY-COFFEYVILL |    38,240|  0.01|
-|DIDION INC-MARKESAN WI              |    36,891|  0.01|
+|CARGILL-HOUSTON TX                  | 1,298,170| 0.230|
+|LD COMMODITIES-HOUSTON TX           |   712,340| 0.126|
+|ADM-CORPUS CHRISTI TX               |   454,720| 0.080|
+|CHS INC-ST PAUL MN                  |   406,020| 0.072|
+|KALAMA EXPORT CO LLC-KALAMA OR      |   287,950| 0.051|
+|ADM-GALVESTON TX                    |   217,190| 0.038|
+|DIDION INC-CAMBRIA WI               |   176,460| 0.031|
+|PREMIER PULSES/UNITED PULSE-WILLIST |   130,700| 0.023|
+|COLUMBIA GRAIN INC-LOMBARD-PORTLAND |   114,120| 0.020|
+|STRATAS FOODS-HOUSTON               |   108,272| 0.019|
+|CHS/TEMCO IRVING-PORTLAND OR        |   105,090| 0.019|
+|CHS INC-MYRTLE GROVE LA             |    92,820| 0.016|
+|DAKOTA DRY BEAN/RHPP-HOUSTON TX     |    91,950| 0.016|
+|BUNGE MILLING-CRETE NE              |    88,490| 0.016|
+|LD COMMODITIES-PORTLAND OR          |    88,290| 0.016|
+|ADM RICE-DESTREHAN LA               |    82,040| 0.015|
+|GEORGE F BROCKE/VITERRA-MINOT ND    |    81,310| 0.014|
+|CAL WESTERN PACKAGING-HOUSTON TX    |    63,921| 0.011|
+|FARMERS RICE-LAKE CHARLES LA        |    58,070| 0.010|
+|LD COMMODITIES-BEAUMONT TX          |    57,640| 0.010|
+|ADM/BEAUMONT RICE MILL-BEAUMONT TX  |    46,730| 0.008|
+|LIFELINE FOODS-ST JOSEPH MO         |    46,500| 0.008|
+|ADM-ABILENE KS                      |    38,560| 0.007|
+|BARTLETT MILLING COMPANY-COFFEYVILL |    38,240| 0.007|
+|DIDION INC-MARKESAN WI              |    36,891| 0.007|  
 
 * By load port/terminal for 480-Title II programs
 
 |LoadPort Term.Name                  |        MT| share|
 |:-----------------------------------|---------:|-----:|
-|G-HOUS-CAR-CARGILL-HOUSTON TX       | 1,362,490|  0.24|
-|G-HOUS-LDC-HOUSTON TX               |   712,340|  0.13|
-|G-HOUS-BCC-COOPER/T SMITH (AP MOELL |   493,882|  0.09|
-|G-CC-ADM-CORPUS CHRISTI TX          |   454,720|  0.08|
-|G-JACI-ALL-JACINTO TX-BID POINT     |   274,810|  0.05|
-|NA                                  |   248,189|  0.04|
-|E-NORF-ALL-NORFOLK VA-BID POINT     |   240,371|  0.04|
-|G-GALV-ADM-GALVESTON TX             |   217,190|  0.04|
-|W-KALA-KEC-KALAMA EXPORT-KALAMA WA  |   185,990|  0.03|
-|G-CC-INTER-CORPUS CHRISTI TX        |   179,170|  0.03|
-|W-PORO-COL-COLUMBIA GRAIN-PORTLAND  |   168,960|  0.03|
-|W-PORO-IRV-TEMCO-IRVING-PORTLAND OR |   140,970|  0.02|
-|G-LC-ALL-LAKE CHARLES LA-BID POINT  |   123,480|  0.02|
-|E-NY-ALL-NEW YORK-NO FAS-BID PT     |   122,350|  0.02|
-|G-NO-DST-A-ADM-DESTREHAN LA         |    86,040|  0.02|
-|W-PORO-ODK-LDC-O DOCK-PORTLAND OR   |    82,290|  0.01|
-|G-BEAU-ALL-BEAUMONT TX-BID POINT    |    74,302|  0.01|
-|G-HOUS-POA-PORTS AMERICA TEXAS WARE |    61,490|  0.01|
-|G-BEAU-LDC-BEAUMONT TX              |    57,640|  0.01|
-|G-NO-MGR-C-CHS-MYRTLE GROVE LA      |    56,620|  0.01|
-|W-KALA-TEMCO-KALAMA WA              |    49,870|  0.01|
-|G-HOUS-HPP-PORT PACKAGING LLC       |    43,950|  0.01|
-|E-CHAR-ALL-CHARLESTON SC-NO FAS-BID |    35,590|  0.01|
-|L-LCHI-ALL-CHICAGO IL-BID POINT     |    35,460|  0.01|
-|G-HOUS-MAN-AGRI-GULF LOGISTICS TX   |    23,700|  0.00|
-
-
-
-
-
-
-
-####  How many total metric tons were purchased each month:
-* For 480-Title II programs
-* For each commodity for 480-Title II programs
-* For the top 25 vendors for 480-Title II programs
-* By vendor plant location for 480-Title II programs
-* By load port/terminal for 480-Title II programs
+|G-HOUS-CAR-CARGILL-HOUSTON TX       | 1,362,490| 0.241|
+|G-HOUS-LDC-HOUSTON TX               |   712,340| 0.126|
+|G-HOUS-BCC-COOPER/T SMITH (AP MOELL |   493,882| 0.087|
+|G-CC-ADM-CORPUS CHRISTI TX          |   454,720| 0.080|
+|G-JACI-ALL-JACINTO TX-BID POINT     |   274,810| 0.049|
+|NA                                  |   248,189| 0.044|
+|E-NORF-ALL-NORFOLK VA-BID POINT     |   240,371| 0.043|
+|G-GALV-ADM-GALVESTON TX             |   217,190| 0.038|
+|W-KALA-KEC-KALAMA EXPORT-KALAMA WA  |   185,990| 0.033|
+|G-CC-INTER-CORPUS CHRISTI TX        |   179,170| 0.032|
+|W-PORO-COL-COLUMBIA GRAIN-PORTLAND  |   168,960| 0.030|
+|W-PORO-IRV-TEMCO-IRVING-PORTLAND OR |   140,970| 0.025|
+|G-LC-ALL-LAKE CHARLES LA-BID POINT  |   123,480| 0.022|
+|E-NY-ALL-NEW YORK-NO FAS-BID PT     |   122,350| 0.022|
+|G-NO-DST-A-ADM-DESTREHAN LA         |    86,040| 0.015|
+|W-PORO-ODK-LDC-O DOCK-PORTLAND OR   |    82,290| 0.015|
+|G-BEAU-ALL-BEAUMONT TX-BID POINT    |    74,302| 0.013|
+|G-HOUS-POA-PORTS AMERICA TEXAS WARE |    61,490| 0.011|
+|G-BEAU-LDC-BEAUMONT TX              |    57,640| 0.010|
+|G-NO-MGR-C-CHS-MYRTLE GROVE LA      |    56,620| 0.010|
+|W-KALA-TEMCO-KALAMA WA              |    49,870| 0.009|
+|G-HOUS-HPP-PORT PACKAGING LLC       |    43,950| 0.008|
+|E-CHAR-ALL-CHARLESTON SC-NO FAS-BID |    35,590| 0.006|
+|L-LCHI-ALL-CHICAGO IL-BID POINT     |    35,460| 0.006|
+|G-HOUS-MAN-AGRI-GULF LOGISTICS TX   |    23,700| 0.004|

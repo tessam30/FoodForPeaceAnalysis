@@ -79,6 +79,7 @@ read_excel_allsheets <- function(filename) {
   ffp = ffp  %>% 
     
     # Fiscal year variables to flag transactions occuring during USAID fiscal calendar
+    # Can also use the between() function from dplyr
     mutate(FiscalYear = ifelse(`Creation Date` < "2011-10-01", 2011, 
                                ifelse(`Creation Date` >= "2011-10-01" & `Creation Date` < "2012-10-01", 2012,
                                       ifelse(`Creation Date` >= "2012-10-01" & `Creation Date` < "2013-10-01", 2013,
