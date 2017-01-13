@@ -1,6 +1,8 @@
 ## Food For Peace Key Questions
 ### Key themes covered:
-* Metric tons purchased
+* Metric tons purchased  
+
+### Key themes remaining:
 * Average commodity cost
 * Total metric tons of freight
 * Total average freight cost per metric tons
