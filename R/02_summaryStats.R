@@ -15,6 +15,26 @@
 # Uses the ffp data frame created in 01_wrangle_ffp
 # TODO: add in source directory
 
+  #For ETHIOPIA Comms piece
+  ffp %>% 
+  filter(titleII == 1 & Rec.Ctry.Name == "ETHIOPIA") %>% 
+  group_by(FiscalYear) %>% 
+  summarise(totalValue = sum(`Net value`, na.rm = TRUE)) %>%
+  mutate(allValue = sum(totalValue)) %>% 
+  spread(FiscalYear, totalValue) %>% 
+  select(-allValue, everything())%>% 
+  arrange(-allValue) %>% 
+  kable(format.args = list(big.mark = ","), digits = 0) 
+  
+ffp %>% 
+  filter(titleII == 1) %>% 
+  group_by(Rec.Ctry.Name) %>% 
+  summarise(totalValue = sum(`Net value`, na.rm = TRUE)) %>%
+  mutate(allValue = sum(totalValue)) %>% 
+  arrange(-totalValue) 
+
+
+  
 # Create a function to produce a table to answer the question. 
 # only current input is the group by variables
  
@@ -27,6 +47,9 @@
         select(-totMT, everything()) %>% 
         arrange(-totMT)
  }
+ 
+ 
+
  
  
  # Formats the dataframe to a markdown table. d controls the number of decimals
