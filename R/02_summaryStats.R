@@ -66,23 +66,24 @@ ffp %>%
       glimpse() %>% 
       slice(beg:end) 
   }
+
+# Question 1. Total Metric Tonnes Purchased -------------------------------------------
   
-  
-   # Create tables for FFP report
+  # Create tables for FFP report
   tot_MT(ffp, functArea, FiscalYear) %>% 
-   fmt()
+    fmt()
   
   # By Category Description
   ffp %>% filter(titleII == 1) %>% 
     tot_MT(., `Category Description`, FiscalYear) %>% 
-   fmt() 
+    fmt() 
   
   # By vendor name -- only printing top 25 results
   ffp %>% filter(titleII == 1) %>% 
     tot_MT(.,  `Vendor Name`, FiscalYear) %>% 
     grpfmt() %>% fmt()
-    
-   # By vendor place location -- only printing top 25 results
+  
+  # By vendor place location -- only printing top 25 results
   ffp %>% filter(titleII == 1) %>% 
     tot_MT(.,  Vend.Pl.Name, FiscalYear) %>% 
     grpfmt() %>% fmt()
@@ -91,9 +92,12 @@ ffp %>%
   ffp %>% filter(titleII == 1) %>% 
     tot_MT(., `LoadPort Term.Name`, FiscalYear) %>% 
     grpfmt(., beg=1, end =100) %>%  fmt()
-
-# -------------------------------------------------------------------------------
   
+
+
+# # Question 2. 2How many metric tons were purchased each FY quart --------
+
+# Setup function  
   tot_MTQ = function(data, ...) {
     data %>% 
       group_by_(.dots = lazyeval::lazy_dots(...)) %>% 
@@ -134,8 +138,9 @@ ffp %>%
     tot_MTQ(., `LoadPort Term.Name`, FiscalQtr) %>% 
     grpfmt() %>%  fmt()
 
-# ---------------------------------------------  
-# Questions 3 - Recut everything by each Month
+
+# Question 3. How many metric tons were purchased each month --------------
+
   tot_MTM = function(data, ...) {
     data %>% 
       group_by_(.dots = lazyeval::lazy_dots(...)) %>% 
@@ -178,8 +183,9 @@ ffp %>%
      grpfmt() %>%  fmt()
 
     
-# ---------------------------------------------------------------------------------
-# Questions 4 - April 2011 and FY 2016
+
+# Question 4. metric tons were purchased between April 2011 and cl --------
+
    tot_MTF = function(data, ...) {
      data %>% filter(durationFlag == 1) %>% 
        group_by_(.dots = lazyeval::lazy_dots(...)) %>% 
@@ -222,29 +228,24 @@ ffp %>%
 
  
  
- # -------------------------------------------------------------------------
-# Question 5. What was the total average commodity cost per metric ton?
+
+# Question 5. What was the total average commodity cost per metric --------
  # All Commodities
  
  # Chunk to summarize, spread, select, arrange, and format
-  test <- function(data, col_name1, ...){
-    # Convert character vector to list of symbols
-      dots <- lapply(col_name1, as.symbol)
-      data %>% 
-      group_by_(.dots = dots)) %>% 
-      mutate(avp = mean(`Total Intl Comm Pric`, na.rm = TRUE)) %>% 
-      ungroup() %>% 
-      
-      # Need to pass a new set of .dots through group_by_
-      dots2 <- lapply()
-      
-  }
+  # test <- function(data, col_name1, ...){
+  #   # Convert character vector to list of symbols
+  #     dots <- lapply(col_name1, as.symbol)
+  #     data %>% 
+  #     group_by_(.dots = dots)) %>% 
+  #     mutate(avp = mean(`Total Intl Comm Pric`, na.rm = TRUE)) %>% 
+  #     ungroup() %>% 
+  #     
+  #     # Need to pass a new set of .dots through group_by_
+  #     dots2 <- lapply()
+  #     
+  # }
 
- 
-
- 
- 
- 
   ffp %>% group_by(functArea) %>% 
    mutate(avePrice_fa = mean(`Total Intl Comm Pric`, na.rm = TRUE),
           count = n()) %>% 
@@ -255,6 +256,8 @@ ffp %>%
    arrange(desc(count, avePrice_fa)) %>% 
    fmt()
  
+ 
+ # TODO: Bulk prices appear to be in a different unit, Need to fix this
  
  #Only tittle II purchases
  ffp %>% 
@@ -284,6 +287,7 @@ ffp %>%
    grpfmt(beg = 1, end = 50) %>% 
    fmt2()
  
+ # By vendor place name, keeping only top 25
  ffp %>% 
    filter(titleII == 1) %>% 
    group_by(Vend.Pl.Name) %>% 
@@ -296,6 +300,7 @@ ffp %>%
    grpfmt(beg = 1, end = 50) %>% 
    fmt2()
  
+ # By Load port name, keeping only top 25
  ffp %>% 
    filter(titleII == 1) %>% 
    group_by(`LoadPort Term.Name`) %>% 

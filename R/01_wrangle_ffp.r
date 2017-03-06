@@ -106,7 +106,21 @@ read_excel_allsheets <- function(filename) {
 
              
 # write a cut of data to .csv
-  write.csv(df_ffp, "ffp_procurement.csv")
+  write.csv(ffp, "ffp_procurement.csv")
+  
+# Fix illegal Stata names first
+  stata_ffp <- ffp
+  
+  # Convert to valid names (not a great idea here, will grep instead)
+  # names(stata_ffp) <- make.names(names(stata_ffp), unique = TRUE)
+  
+  # Seems that Stata wants you to remove "." as well
+  names(stata_ffp) <- gsub(" ", "", names(stata_ffp))
+  names(stata_ffp) <- gsub("[.]", "_", names(stata_ffp))
+  names(stata_ffp) <- gsub("-", "_", names(stata_ffp))
+  
+  library(foreign)
+  write.dta(stata_ffp, "ffp_procurement.dta")
   
 # TODO: GeoCode  
   
